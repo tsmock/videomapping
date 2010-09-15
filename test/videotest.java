@@ -32,7 +32,7 @@ public class videotest {
         b.addActionListener(new ActionListener() {
             
             public void actionPerformed(ActionEvent e) {
-                sVP.jump(610000);				
+                sVP.jump(610000);               
             }
         });
         sVP.add(b);

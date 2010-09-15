@@ -38,7 +38,7 @@ public class GpsPlayer {
     
     public WayPoint getWaypoint(long relTime)
     {
-        int pos = Math.round(relTime/1000);//TODO ugly quick hack	
+        int pos = Math.round(relTime/1000);//TODO ugly quick hack   
         return ls.get(pos);
     }
 
@@ -53,7 +53,7 @@ public class GpsPlayer {
     }
     
     // one secure step forward
-    public void next() {		
+    public void next() {        
         if(ls.indexOf(curr)+1<ls.size())
         {
             prev=curr;
@@ -69,12 +69,12 @@ public class GpsPlayer {
     public void prev()
     {
         if(ls.indexOf(curr)>0)
-        {			
+        {           
             next =curr;
             curr=prev;
-            if(ls.indexOf(curr)==0) prev=null;else 	prev=ls.get(ls.indexOf(curr)-1);
+            if(ls.indexOf(curr)==0) prev=null;else  prev=ls.get(ls.indexOf(curr)-1);
         }
-        else prev=null;		
+        else prev=null;     
     }
     
     //select the given waypoint as center
@@ -159,7 +159,7 @@ public class GpsPlayer {
             {
                 Point c = Main.map.mapView.getPoint(getCurr().getEastNorth());
                 Point n = Main.map.mapView.getPoint(getNext().getEastNorth());
-                if(n.x<c.x)	next(); else prev();
+                if(n.x<c.x) next(); else prev();
                 invalid=true;
                 m=leftP;
                 System.out.println("entering left segment");
@@ -168,7 +168,7 @@ public class GpsPlayer {
             {
                 Point c = Main.map.mapView.getPoint(getCurr().getEastNorth());
                 Point n = Main.map.mapView.getPoint(getNext().getEastNorth());
-                if(n.x>c.x)	next(); else prev();
+                if(n.x>c.x) next(); else prev();
                 invalid=true;
                 m=rightP;
                 System.out.println("entering right segment");
@@ -189,7 +189,7 @@ public class GpsPlayer {
             else
             {
                 prev(); //walk back to the segment before
-            }			
+            }           
         }
         return m;
     }
@@ -203,7 +203,7 @@ public class GpsPlayer {
         Point leftP,rightP;
         Point c = Main.map.mapView.getPoint(getCurr().getEastNorth());
         Point p1 = Main.map.mapView.getPoint(getCurr().getEastNorth());
-        Point p2 = getEndpoint();		
+        Point p2 = getEndpoint();       
         //determine which point is what
         leftP=getLeftPoint(p1, p2);
         rightP=getRightPoint(p1,p2);
@@ -219,7 +219,7 @@ public class GpsPlayer {
 
     //gets further infos for a point between two Waypoints
     public WayPoint getInterpolatedWaypoint(Point m)
-    {	int a,b,length,lengthSeg;
+    {   int a,b,length,lengthSeg;
         long timeSeg;
         float ratio;
         Time base;
@@ -244,7 +244,7 @@ public class GpsPlayer {
         length=lengthSeg-length;
         //calc time difference
         ratio=(float)length/(float)lengthSeg;
-        long inc=(long) (timeSeg*ratio);		
+        long inc=(long) (timeSeg*ratio);        
         long old = getCurr().getTime().getTime();
         old=old+inc;
         Date t = new Date(old);
@@ -345,7 +345,7 @@ public class GpsPlayer {
     
     //jumps to a specific time
     public void jump(long relTime) {
-        int pos = Math.round(relTime/1000);//TODO ugly quick hack	
+        int pos = Math.round(relTime/1000);//TODO ugly quick hack   
         jump(pos);
         //if (autoCenter) Main.map.mapView.
     }
@@ -357,16 +357,16 @@ public class GpsPlayer {
         {
             //start
             t= new Timer();
-            ani=new TimerTask() {			
+            ani=new TimerTask() {           
                 @Override
                 //some cheap animation stuff
-                public void run() {				
+                public void run() {             
                     next();
                     if(autoCenter) Main.map.mapView.zoomTo(getCurr().getEastNorth());
                     Main.map.mapView.repaint();
                 }
             };
-            t.schedule(ani,1000,1000);			
+            t.schedule(ani,1000,1000);          
         }
         else
         {
@@ -374,7 +374,7 @@ public class GpsPlayer {
             ani.cancel();
             ani=null;
             t.cancel();
-            t=null;					
+            t=null;                 
         }*/
     }
 

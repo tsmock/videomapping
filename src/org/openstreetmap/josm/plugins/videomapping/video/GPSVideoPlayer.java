@@ -73,11 +73,11 @@ public class GPSVideoPlayer implements PlayerObserver{
 
             //a push way to set video attirbutes
             public void metadata(long time, boolean subtitles) {
-                if(subtTitleComponent!=null) subtTitleComponent.setSelected(subtitles);				
+                if(subtTitleComponent!=null) subtTitleComponent.setSelected(subtitles);             
             }
             
         });
-        t = new Timer();		
+        t = new Timer();        
     }
     
     //marks all points that are covered by video AND GPS track
@@ -89,7 +89,7 @@ public class GPSVideoPlayer implements PlayerObserver{
         {
             //GPS is within video timeperiod
             start=gps.getWaypoint(0);
-            end=gps.getWaypoint(gps.getLength());			
+            end=gps.getWaypoint(gps.getLength());           
         }
         else
         {
@@ -104,7 +104,7 @@ public class GPSVideoPlayer implements PlayerObserver{
         
         for (WayPoint wp : ls) {
             wp.attr.put("synced", "true");
-        }	
+        }   
     }
 
     public void setAsyncMode(boolean b)
@@ -157,7 +157,7 @@ public class GPSVideoPlayer implements PlayerObserver{
     {
         if(!synced)
         {
-            //when not synced we can just move the icon to the right position			
+            //when not synced we can just move the icon to the right position           
             gps.jump(new Date(gpsT));
             Main.map.mapView.repaint();
         }

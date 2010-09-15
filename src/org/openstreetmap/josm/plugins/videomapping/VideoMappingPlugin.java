@@ -87,7 +87,7 @@ public class VideoMappingPlugin extends Plugin implements LayerChangeListener{
         if (newLayer instanceof GpxLayer)
         {
             VAdd.setEnabled(true);
-            GPSTrack=((GpxLayer) newLayer).data;			
+            GPSTrack=((GpxLayer) newLayer).data;            
             //TODO append to GPS Layer menu
         }
         else
@@ -109,7 +109,7 @@ public class VideoMappingPlugin extends Plugin implements LayerChangeListener{
         activeLayerChange(null,arg0);
     }
 
-    public void layerRemoved(Layer arg0) {	
+    public void layerRemoved(Layer arg0) {  
     } //well ok we have a local copy of the GPS track....
 
     //register main controls
@@ -117,7 +117,7 @@ public class VideoMappingPlugin extends Plugin implements LayerChangeListener{
         VAdd= new JosmAction(tr("Import Video"),"videomapping",tr("Sync a video against this GPS track"),null,false) {
             private static final long serialVersionUID = 1L;
 
-            public void actionPerformed(ActionEvent arg0) {					
+            public void actionPerformed(ActionEvent arg0) {                 
                     JFileChooser fc = new JFileChooser("C:\\TEMP\\");
                     //fc.setSelectedFile(new File(mru));
                     if(fc.showOpenDialog(Main.main.parent)!=JFileChooser.CANCEL_OPTION)
@@ -149,7 +149,7 @@ public class VideoMappingPlugin extends Plugin implements LayerChangeListener{
         VStart = new JosmAction(tr("Play/Pause"), "audio-playpause", tr("starts/pauses video playback"),
                 Shortcut.registerShortcut("videomapping:startstop","",KeyEvent.VK_NUMPAD5, Shortcut.GROUP_DIRECT), false) {
             
-            public void actionPerformed(ActionEvent e) {								
+            public void actionPerformed(ActionEvent e) {                                
                 if(player.playing()) player.pause(); else player.play();
             }
         };
@@ -160,7 +160,7 @@ public class VideoMappingPlugin extends Plugin implements LayerChangeListener{
                             
             }
         };
-        Vbackward = new JosmAction(tr("Jump To"), null, tr("jumps to the entered gps time"),null, false) {			
+        Vbackward = new JosmAction(tr("Jump To"), null, tr("jumps to the entered gps time"),null, false) {          
             public void actionPerformed(ActionEvent e) {
                 String s =JOptionPane.showInputDialog(tr("please enter GPS timecode"),"10:07:57");
                 SimpleDateFormat format= new SimpleDateFormat("hh:mm:ss");
@@ -168,9 +168,9 @@ public class VideoMappingPlugin extends Plugin implements LayerChangeListener{
                 try {
                     t = format.parse(s);
                     if (t!=null)
-                        {							
+                        {                           
                             player.jumpToGPSTime(t.getTime());
-                        }						
+                        }                       
                 } catch (ParseException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
@@ -238,7 +238,7 @@ public class VideoMappingPlugin extends Plugin implements LayerChangeListener{
                 String s = (String)JOptionPane.showInputDialog(Main.parent,tr("Jump in video for x ms"),tr("Jump length"),JOptionPane.QUESTION_MESSAGE,null,possibilities,jumplength);
                 jumplength=Integer.getInteger(s);
                 applySettings();
-                saveSettings();			
+                saveSettings();         
             }
         });
         
@@ -283,7 +283,7 @@ public class VideoMappingPlugin extends Plugin implements LayerChangeListener{
         VDeinterlacer.add(VIntBob);
         VDeinterlacer.add(VIntLinear);
         
-        VMenu.add(VAdd);		
+        VMenu.add(VAdd);        
         VMenu.add(VStart);
         VMenu.add(Vbackward);
         VMenu.add(Vforward);
@@ -312,7 +312,7 @@ public class VideoMappingPlugin extends Plugin implements LayerChangeListener{
     
     //load all properties or set defaults
     private void loadSettings() {
-        String temp;		
+        String temp;        
         temp=Main.pref.get(VM_AUTOCENTER);
         if((temp!=null)&&(temp.length()!=0))autocenter=Boolean.getBoolean(temp); else autocenter=false;
         temp=Main.pref.get(VM_DEINTERLACER);

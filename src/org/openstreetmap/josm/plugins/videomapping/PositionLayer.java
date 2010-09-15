@@ -75,7 +75,7 @@ public class PositionLayer extends Layer implements MouseListener,MouseMotionLis
         ms= new SimpleDateFormat("mm:ss");
         gpsTimeCode= new SimpleDateFormat("hh:mm:ss");
         Main.map.mapView.addMouseListener(this);
-        Main.map.mapView.addMouseMotionListener(this);							
+        Main.map.mapView.addMouseMotionListener(this);                          
         
     }
 
@@ -178,7 +178,7 @@ public class PositionLayer extends Layer implements MouseListener,MouseMotionLis
             if(iconPosition!=null)
             {
                 p=Main.map.mapView.getPoint(iconPosition.getEastNorth());
-                icon.paintIcon(null, g, p.x-icon.getIconWidth()/2, p.y-icon.getIconHeight()/2);				
+                icon.paintIcon(null, g, p.x-icon.getIconWidth()/2, p.y-icon.getIconHeight()/2);             
                 //g.drawString(mins.format(iconPosition.getTime()),p.x-10,p.y-10); //TODO when synced we might wan't to use a different layout
                 g.drawString(gpsTimeCode.format(iconPosition.getTime()),p.x-10,p.y-10);
             }
@@ -187,7 +187,7 @@ public class PositionLayer extends Layer implements MouseListener,MouseMotionLis
         {
             if (player.getCurr()!=null){
             p=Main.map.mapView.getPoint(player.getCurr().getEastNorth());
-            icon.paintIcon(null, g, p.x-icon.getIconWidth()/2, p.y-icon.getIconHeight()/2);			
+            icon.paintIcon(null, g, p.x-icon.getIconWidth()/2, p.y-icon.getIconHeight()/2);         
             g.drawString(gpsTimeCode.format(player.getCurr().getTime()),p.x-10,p.y-10);
             }
         }
@@ -204,7 +204,7 @@ public class PositionLayer extends Layer implements MouseListener,MouseMotionLis
         {
             p = Main.map.mapView.getPoint(n.getEastNorth());
             if (rect.contains(p))
-            {				
+            {               
                 return n;
             }
             
@@ -227,10 +227,10 @@ public class PositionLayer extends Layer implements MouseListener,MouseMotionLis
 
     }
 
-    public void mouseClicked(MouseEvent e) {		
+    public void mouseClicked(MouseEvent e) {        
     }
 
-    public void mouseEntered(MouseEvent arg0) {	
+    public void mouseEntered(MouseEvent arg0) { 
     }
 
     public void mouseExited(MouseEvent arg0) {
@@ -253,7 +253,7 @@ public class PositionLayer extends Layer implements MouseListener,MouseMotionLis
     }
     
     //
-    public void mouseReleased(MouseEvent e) {		
+    public void mouseReleased(MouseEvent e) {       
         //only leftclicks on our layer
         if(e.getButton() == MouseEvent.BUTTON1) {
             if(dragIcon)
@@ -269,7 +269,7 @@ public class PositionLayer extends Layer implements MouseListener,MouseMotionLis
                     player.jump(wp);
                     //jump if we know position
                     if(wp.attr.containsKey("synced"))
-                    {						
+                    {                       
                         if(gps!=null) notifyObservers(player.getRelativeTime()); //call videoplayers to set right position
                     }
                 }
@@ -280,9 +280,9 @@ public class PositionLayer extends Layer implements MouseListener,MouseMotionLis
     }
     
     //slide and restrict during movement
-    public void mouseDragged(MouseEvent e) {		
+    public void mouseDragged(MouseEvent e) {        
         if(dragIcon)
-        {			
+        {           
             mouse=e.getPoint();
             //restrict to GPS track
             iconPosition=player.getInterpolatedWaypoint(mouse);
@@ -292,9 +292,9 @@ public class PositionLayer extends Layer implements MouseListener,MouseMotionLis
     }
 
     //visualize drag&drop
-    public void mouseMoved(MouseEvent e) {		
+    public void mouseMoved(MouseEvent e) {      
         if (player.getCurr()!=null)
-        {						
+        {                       
             if (getIconRect().contains(e.getPoint()))
             {
                 Main.map.mapView.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

@@ -131,7 +131,7 @@ public class SimpleVideoPlayer extends JFrame implements MediaPlayerEventListene
         mute= new JToggleButton(tr("mute"));
         speed = new JSlider(-200,200,0);
         speed.setMajorTickSpacing(100);
-        speed.setPaintTicks(true);			
+        speed.setPaintTicks(true);          
         speed.setOrientation(Adjustable.VERTICAL);
         Hashtable labelTable = new Hashtable();
         labelTable.put( new Integer( 0 ), new JLabel("1x") );
@@ -173,7 +173,7 @@ public class SimpleVideoPlayer extends JFrame implements MediaPlayerEventListene
                     {
                         //recalc to 0.x percent value
                         mp.setPosition((float)timeline.getValue()/100.0f);
-                    }					
+                    }                   
                 }
             }
             });
@@ -181,7 +181,7 @@ public class SimpleVideoPlayer extends JFrame implements MediaPlayerEventListene
         play.addActionListener(new ActionListener() {
             
             public void actionPerformed(ActionEvent arg0) {
-                if(mp.isPlaying()) mp.pause(); else mp.play();				
+                if(mp.isPlaying()) mp.pause(); else mp.play();              
             }
         });
         
@@ -227,7 +227,7 @@ public class SimpleVideoPlayer extends JFrame implements MediaPlayerEventListene
             }
         });
         
-    }	
+    }   
 
     public void finished(MediaPlayer arg0) {
             
@@ -269,9 +269,9 @@ public class SimpleVideoPlayer extends JFrame implements MediaPlayerEventListene
     }
     
 
-    public void windowActivated(WindowEvent arg0) {	}
+    public void windowActivated(WindowEvent arg0) { }
 
-    public void windowClosed(WindowEvent arg0) {	}
+    public void windowClosed(WindowEvent arg0) {    }
 
     //we have to unload and disconnect to the VLC engine
     public void windowClosing(WindowEvent evt) {
@@ -281,19 +281,19 @@ public class SimpleVideoPlayer extends JFrame implements MediaPlayerEventListene
         System.exit(0);
       }
 
-    public void windowDeactivated(WindowEvent arg0) {	}
+    public void windowDeactivated(WindowEvent arg0) {   }
 
-    public void windowDeiconified(WindowEvent arg0) {	}
+    public void windowDeiconified(WindowEvent arg0) {   }
 
-    public void windowIconified(WindowEvent arg0) {	}
+    public void windowIconified(WindowEvent arg0) { }
 
-    public void windowOpened(WindowEvent arg0) {	}	
+    public void windowOpened(WindowEvent arg0) {    }   
     
     public void setFile(File f)
     {
         String mediaPath = f.getAbsoluteFile().toString();
         mp.playMedia(mediaPath, mediaOptions);
-        pack();	
+        pack(); 
     }
     
     public void play()
@@ -343,7 +343,7 @@ public class SimpleVideoPlayer extends JFrame implements MediaPlayerEventListene
         pack();
     }
 
-    public long getLength() {		
+    public long getLength() {       
         return mp.getLength();
     }
 
@@ -368,7 +368,7 @@ public class SimpleVideoPlayer extends JFrame implements MediaPlayerEventListene
             t.cancel();
             looping=false;
         }
-        else			
+        else            
         {
             final long resetpoint=(long) mp.getTime()-loopLength/2;
             TimerTask ani=new TimerTask() {
