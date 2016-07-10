@@ -22,15 +22,15 @@ public class GPSVideoPlayer extends VideoPlayer {
     private List<GPSVideo> videos;
     private VideoPositionLayer videoPositionLayer;
 
-    public GPSVideoPlayer(DateFormat videoTimeFormat,VideoPositionLayer videoPositionLayer) throws HeadlessException {
+    public GPSVideoPlayer(DateFormat videoTimeFormat, VideoPositionLayer videoPositionLayer) throws HeadlessException {
         super(videoTimeFormat);
         videos = new LinkedList<>();
-        this.videoPositionLayer=videoPositionLayer;
+        this.videoPositionLayer = videoPositionLayer;
         videoPositionLayer.setGPSVideoPlayer(this);
     }
 
-    public GPSVideo addVideo(File videofile) {		
-        GPSVideo video = new GPSVideo(super.addVideo(videofile,Integer.toString(videos.size())));
+    public GPSVideo addVideo(File videofile) {
+        GPSVideo video = new GPSVideo(super.addVideo(videofile, Integer.toString(videos.size())));
         enableSingleVideoMode(true);
         videos.add(video);
         addSyncButton(video);
@@ -38,56 +38,56 @@ public class GPSVideoPlayer extends VideoPlayer {
     }
 
     private void addSyncButton(GPSVideo video) {
-        JButton syncButton= new JButton(tr("Sync"));
-        syncButton.setBackground(Color.RED);		
+        JButton syncButton = new JButton(tr("Sync"));
+        syncButton.setBackground(Color.RED);
         syncButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 resync(e);
-            }			
+            }
         });
-        video.SyncComponent=syncButton;
+        video.SyncComponent = syncButton;
         //video.panel.add(syncButton,BorderLayout.SOUTH);
         controlsPanel.add(syncButton);
-    }	
+    }
 
     //do a (re)sync
     private void resync(ActionEvent e) {
-        JButton btn =(JButton)e.getSource();
-        GPSVideo v=findVideo(btn);
+        JButton btn = (JButton) e.getSource();
+        GPSVideo v = findVideo(btn);
         v.doSync(videoPositionLayer);
         btn.setBackground(Color.GREEN);
         enableSingleVideoMode(false);
     }
-    
+
     protected GPSVideo findVideo(JButton source) {
         for (GPSVideo v : videos) {
-            if (v.SyncComponent==source) return v;
+            if (v.SyncComponent == source) return v;
         }
         return null;
     }
-    
+
     //jump in all videos this date, if possible
     public void jumpTo(Date date) {
         for (GPSVideo video : videos) {
             video.jumpTo(date);
         }
     }
-    
+
     public boolean areAllVideosSynced() {
         for (GPSVideo video : videos) {
             if (!video.isSynced()) return false;
         }
-        return true;		
+        return true;
     }
 
     @Override
-    public void update_plays() {		
+    public void update_plays() {
         super.update_plays();
         if (areAllVideosSynced())
-            videoPositionLayer.setIconPosition( videos.get(0).getCurrentWayPoint());
+            videoPositionLayer.setIconPosition(videos.get(0).getCurrentWayPoint());
     }
-    
+
     @Override
     public void windowClosing(WindowEvent arg0) {
         videoPositionLayer.unload();

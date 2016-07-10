@@ -23,16 +23,16 @@ public class GPSVideo extends Video {
     public WayPoint firstWayPoint;
     public WayPoint lastWayPoint;
     private VideoPositionLayer videoPositionLayer;
-    
+
     public GPSVideo(File filename, String id, MediaPlayerFactory mediaPlayerFactory) {
-        super(filename,id,mediaPlayerFactory);
+        super(filename, id, mediaPlayerFactory);
     }
-    
+
     public GPSVideo(Video video) {
         super(video.filename, video.id, video.mediaPlayerFactory);
         this.player = video.player;
     }
-    
+
     //calculates attributes basing upon the current position
     public void doSync(VideoPositionLayer layer) {
         this.videoPositionLayer = layer;
@@ -62,7 +62,7 @@ public class GPSVideo extends Video {
             return videoPositionLayer.getWayPointBefore(start);
         }
     }
-    
+
     //make sure we don't leave the GPS track
     private WayPoint getLastGPS() {
         if (end == null || end.after(videoPositionLayer.getLastWayPoint().getTime())) {
@@ -71,9 +71,9 @@ public class GPSVideo extends Video {
             return videoPositionLayer.getWayPointBefore(end);
         }
     }
-    
+
     private void removeSyncedWayPoints() {
-        List <WayPoint> track = videoPositionLayer.getTrack();
+        List<WayPoint> track = videoPositionLayer.getTrack();
         int start = track.indexOf(firstWayPoint);
         int end = track.indexOf(lastWayPoint);
         if (0 <= start && start <= end && end < track.size()) {
@@ -84,7 +84,7 @@ public class GPSVideo extends Video {
     }
 
     private void markSyncedWayPoints() {
-        List <WayPoint> track = videoPositionLayer.getTrack();
+        List<WayPoint> track = videoPositionLayer.getTrack();
         int start = track.indexOf(firstWayPoint);
         int end = track.indexOf(lastWayPoint);
         if (0 <= start && start <= end && end < track.size()) {
@@ -98,15 +98,15 @@ public class GPSVideo extends Video {
         return syncWayPoint != null;
     }
 
-    //if synced jump in video to this GPS timecode 
+    //if synced jump in video to this GPS timecode
     public void jumpTo(Date GPSTime) {
-        if((GPSTime.after(firstWayPoint.getTime())&(GPSTime.before(lastWayPoint.getTime())))) {
+        if ((GPSTime.after(firstWayPoint.getTime()) & (GPSTime.before(lastWayPoint.getTime())))) {
             long diff = GPSTime.getTime()-start.getTime();
             player.setTime(diff);
             System.out.println(diff);
         }
     }
-    
+
     public WayPoint getCurrentWayPoint() {
         if (isSynced()) {
             long videotime = player.getTime();

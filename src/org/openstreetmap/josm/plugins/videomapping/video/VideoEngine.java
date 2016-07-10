@@ -9,6 +9,10 @@ import java.util.List;
 
 import org.openstreetmap.josm.Main;
 
+import com.sun.jna.NativeLibrary;
+import com.sun.jna.platform.win32.Advapi32Util;
+import com.sun.jna.platform.win32.WinReg;
+
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.player.DeinterlaceMode;
 import uk.co.caprica.vlcj.player.MediaPlayer;
@@ -20,10 +24,6 @@ import uk.co.caprica.vlcj.player.embedded.FullScreenStrategy;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.runtime.windows.WindowsRuntimeUtil;
 
-import com.sun.jna.NativeLibrary;
-import com.sun.jna.platform.win32.Advapi32Util;
-import com.sun.jna.platform.win32.WinReg;
-
 //concrete Player library that is able to playback multiple videos
 public class VideoEngine implements MediaPlayerEventListener {
     private FullScreenStrategy fullScreenStrategy;
@@ -32,7 +32,7 @@ public class VideoEngine implements MediaPlayerEventListener {
     private List<VideosObserver> observers;
     private final String[] libvlcArgs = {""};
     private final String[] standardMediaOptions = {""};
-    private final static String[] deinterlacers = {"bob","linear"};
+    private static final String[] deinterlacers = {"bob", "linear"};
     //private final float initialCanvasFactor = 0.5f;
     private boolean singleVideoMode; //commands will only affect the last added video
     private Video lastAddedVideo;
@@ -68,7 +68,7 @@ public class VideoEngine implements MediaPlayerEventListener {
     }
 
     public VideoEngine(Window parent) {
-        System.setProperty("logj4.configuration","file:log4j.xml"); //TODO still unsure if we can't link this to the JOSM log4j instance
+        System.setProperty("logj4.configuration", "file:log4j.xml"); //TODO still unsure if we can't link this to the JOSM log4j instance
         videos = new LinkedList<>();
         observers = new LinkedList<>();
         try {
@@ -86,10 +86,10 @@ public class VideoEngine implements MediaPlayerEventListener {
     public void add(Video video) {
         try {
             EmbeddedMediaPlayer mp = mediaPlayerFactory.newEmbeddedMediaPlayer(fullScreenStrategy);
-            video.player=mp;
+            video.player = mp;
             mp.setStandardMediaOptions(standardMediaOptions);
             videos.add(video);
-            lastAddedVideo=video;
+            lastAddedVideo = video;
             mp.setVideoSurface(video.videoSurface);
             mp.addMediaPlayerEventListener(this);
             String mediaPath = video.filename.getAbsoluteFile().toString();
@@ -101,6 +101,7 @@ public class VideoEngine implements MediaPlayerEventListener {
             Main.error(tr("Unable to find native libvlc library!"));
         }
     }
+
     /*
     private Video getVideo(MediaPlayer mp)
     {
@@ -146,11 +147,11 @@ public class VideoEngine implements MediaPlayerEventListener {
     //jumps relative for ms in all videos
     public void jumpFor(long ms) {
         if (singleVideoMode) {
-            long start=lastAddedVideo.player.getTime();
+            long start = lastAddedVideo.player.getTime();
             lastAddedVideo.player.setTime(start+ms);
         } else {
             for (Video video : videos) {
-                long start=video.player.getTime();
+                long start = video.player.getTime();
                 video.player.setTime(start+ms);
             }
         }
@@ -210,12 +211,12 @@ public class VideoEngine implements MediaPlayerEventListener {
     //returns if at least one video has subtitles
     public boolean hasSubtitles() {
         for (Video video : videos) {
-            if (video.player.getSpuCount()>0) return true;
+            if (video.player.getSpuCount() > 0) return true;
         }
         return false;
     }
 
-    public void setSubtitles (boolean enabled) {
+    public void setSubtitles(boolean enabled) {
         if (enabled) {
             //VLC uses a list of sub picture units
             for (Video video : videos) {
@@ -228,7 +229,7 @@ public class VideoEngine implements MediaPlayerEventListener {
         }
     }
 
-    public void setDeinterlacer (DeinterlaceMode deinterlacer) {
+    public void setDeinterlacer(DeinterlaceMode deinterlacer) {
         if (singleVideoMode) {
             lastAddedVideo.player.setDeinterlace(deinterlacer);
         } else {
@@ -255,9 +256,9 @@ public class VideoEngine implements MediaPlayerEventListener {
         for (Video video : videos) {
             video.player.stop();
             video.player.release();
-            video.player=null;
-            video.videoSurface=null;
-            video.canvas=null;
+            video.player = null;
+            video.videoSurface = null;
+            video.canvas = null;
         }
         mediaPlayerFactory.release();
     }
@@ -302,7 +303,7 @@ public class VideoEngine implements MediaPlayerEventListener {
     }
 */
     @Override
-    public void opening(MediaPlayer arg0) {	}
+    public void opening(MediaPlayer arg0) { }
 
     @Override
     public void pausableChanged(MediaPlayer arg0, int arg1) { }
